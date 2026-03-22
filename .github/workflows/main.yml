@@ -24,17 +24,20 @@ jobs:
       - name: gradlew ruxsatini berish
         run: chmod +x gradlew
 
-      # ✅ wrapper.properties ni e'tiborsiz qoldirib, to'g'ridan Gradle 8.5 o'rnatish
-      - name: Gradle 8.5 o'rnatish (majburiy)
+      - name: Gradle 8.5 o'rnatish
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.5'
 
-      - name: wrapper.properties ni tekshirish (debug)
-        run: cat gradle/wrapper/gradle-wrapper.properties
+      # ✅ setAppCacheEnabled qatorini izohga olish
+      - name: Kod xatosini tuzatish
+        run: |
+          sed -i 's/s\.setAppCacheEnabled(true);/\/\/ s.setAppCacheEnabled(true); \/\/ removed: deprecated API 33+/' \
+            app/src/main/java/uz/sozboyligi/app/MainActivity.java
+          grep -n "setAppCacheEnabled" app/src/main/java/uz/sozboyligi/app/MainActivity.java || echo "✅ Qator muvaffaqiyatli o'chirildi"
 
       - name: APK build
-        run: gradle assembleDebug --no-daemon --warning-mode all
+        run: gradle assembleDebug --no-daemon
 
       - name: APK ni saqlash
         uses: actions/upload-artifact@v4
