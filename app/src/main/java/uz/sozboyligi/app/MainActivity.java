@@ -84,8 +84,8 @@ public class MainActivity extends Activity {
         s.setSupportZoom(false);
         s.setTextZoom(100);
         s.setMediaPlaybackRequiresUserGesture(false);
-//        s.setAppCacheEnabled(true);
-
+////// ✅ YANGI (shu bilan almashtiring)
+////// s.setAppCacheEnabled(true); // API 33+ da olib tashlangan
         webView.setWebViewClient(new WebViewClient() {
 
             @Override
