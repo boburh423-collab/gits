@@ -7,50 +7,50 @@ on:
     branches: [ main, master ]
   workflow_dispatch:
 
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true   # Node.js 24 majburiy
-
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
       - name: Kodni yuklab olish
-        uses: actions/checkout@v4.2.2          # yangilangan
+        uses: actions/checkout@v4
 
       - name: JDK 17 o'rnatish
-        uses: actions/setup-java@v4.7.0        # yangilangan
+        uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
-          cache: gradle
 
       - name: gradlew ruxsatini berish
         run: chmod +x gradlew
 
-      - name: Gradle wrapper cache
-        uses: actions/cache@v4.2.3             # yangilangan
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
+      # ✅ ASOSIY TUZATISH: Gradle 9 emas, 8.9 ishlatish
+      - name: Gradle versiyasini 8.9 ga tushirish
+        run: |
+          mkdir -p gradle/wrapper
+          cat > gradle/wrapper/gradle-wrapper.properties << 'EOF'
+          distributionBase=GRADLE_USER_HOME
+          distributionPath=wrapper/dists
+          distributionUrl=https\://services.gradle.org/distributions/gradle-8.9-bin.zip
+          networkTimeout=10000
+          validateDistributionUrl=true
+          zipStoreBase=GRADLE_USER_HOME
+          zipStorePath=wrapper/dists
+          EOF
 
       - name: APK build (debug)
-        run: ./gradlew assembleDebug --stacktrace --no-daemon
+        run: ./gradlew assembleDebug --no-daemon
 
-      - name: APK ni artifact sifatida saqlash
-        uses: actions/upload-artifact@v4.6.2   # yangilangan
+      - name: APK ni saqlash
+        uses: actions/upload-artifact@v4
         with:
-          name: app-debug-v1.0
+          name: app-debug
           path: app/build/outputs/apk/debug/app-debug.apk
           retention-days: 30
 
       - name: GitHub Release (faqat tag push da)
         if: startsWith(github.ref, 'refs/tags/')
-        uses: softprops/action-gh-release@v2.2.1  # yangilangan
+        uses: softprops/action-gh-release@v2
         with:
           files: app/build/outputs/apk/debug/app-debug.apk
           generate_release_notes: true
