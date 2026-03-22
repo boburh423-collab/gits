@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000d07"
+    android:gravity="center">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_centerInParent="true">
+
+        <!-- Logo doira -->
+        <RelativeLayout
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center">
+
+            <View
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:background="@drawable/circle_bg"/>
+
+            <ImageView
+                android:id="@+id/splashLogo"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_book"
+                android:contentDescription="Logo"/>
+        </RelativeLayout>
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/splashTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="So'z Boyligi"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="#6ee7b7"
+            android:layout_marginTop="20dp"
+            android:fontFamily="sans-serif-medium"/>
+
+        <!-- Subtitle -->
+        <TextView
+            android:id="@+id/splashSub"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="So'z boyligingizni oshiring!"
+            android:textSize="14sp"
+            android:textColor="#4b7a62"
+            android:layout_marginTop="8dp"/>
+
+    </LinearLayout>
+
+    <!-- Loading dots -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="60dp"
+        android:gravity="center">
+
+        <ProgressBar
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:indeterminateTint="#10b981"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
