@@ -7,16 +7,19 @@ on:
     branches: [ main, master ]
   workflow_dispatch:
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true   # Node.js 24 majburiy
+
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
       - name: Kodni yuklab olish
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.2.2          # yangilangan
 
       - name: JDK 17 o'rnatish
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v4.7.0        # yangilangan
         with:
           java-version: '17'
           distribution: 'temurin'
@@ -26,7 +29,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Gradle wrapper cache
-        uses: actions/cache@v4
+        uses: actions/cache@v4.2.3             # yangilangan
         with:
           path: |
             ~/.gradle/caches
@@ -39,7 +42,7 @@ jobs:
         run: ./gradlew assembleDebug --stacktrace --no-daemon
 
       - name: APK ni artifact sifatida saqlash
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.6.2   # yangilangan
         with:
           name: app-debug-v1.0
           path: app/build/outputs/apk/debug/app-debug.apk
@@ -47,7 +50,7 @@ jobs:
 
       - name: GitHub Release (faqat tag push da)
         if: startsWith(github.ref, 'refs/tags/')
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v2.2.1  # yangilangan
         with:
           files: app/build/outputs/apk/debug/app-debug.apk
           generate_release_notes: true
