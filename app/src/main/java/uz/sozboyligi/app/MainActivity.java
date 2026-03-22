@@ -84,7 +84,7 @@ public class MainActivity extends Activity {
         s.setSupportZoom(false);
         s.setTextZoom(100);
         s.setMediaPlaybackRequiresUserGesture(false);
-        s.setAppCacheEnabled(true);
+//        s.setAppCacheEnabled(true);
 
         webView.setWebViewClient(new WebViewClient() {
 
